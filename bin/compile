@@ -20,6 +20,11 @@ if [ ! -d ${CACHE_DIR} ]; then
   mkdir ${CACHE_DIR}
 fi
 
+if [ ! -d ${GRAFANA_TARGET} ]; then
+  status "Creating ${GRAFANA_TARGET}"
+  mkdir -p ${GRAFANA_TARGET}
+fi
+
 if [ -f "${CACHE_DIR}/${GRAFANA_ARCHIVE}" ]; then
   status "Using file from cache: ${GRAFANA_ARCHIVE}"
 else
