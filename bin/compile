@@ -38,6 +38,7 @@ fi
 status "Extracting..."
 tar xfz ${CACHE_DIR}/${GRAFANA_ARCHIVE} --strip-components 1 -C ${GRAFANA_TARGET}
 
+status ${CACHE_DIR}/${GRAFANA_ARCHIVE}
 status ${BUILDPACK}
 status ${GRAFANA_TARGET}
 cp -f ${BUILDPACK}/bin/run.sh ${GRAFANA_TARGET}/

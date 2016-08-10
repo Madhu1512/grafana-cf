@@ -4,4 +4,4 @@ set -euo pipefail
 
 export APP_ROOT=$HOME
 
-exec /tmp/grafana/bin/grafana-server
+exec ${APP_ROOT}/grafana/bin/grafana-server
