@@ -3,4 +3,4 @@
 set -euo pipefail
 
 export APP_ROOT=$HOME
-exec ${APP_ROOT}/grafana/bin/grafana-server --config=${APP_ROOT}/grafana/config/grafana.ini
+exec GF_SERVER_HTTP_PORT=$PORT ${APP_ROOT}/grafana/bin/grafana-server
