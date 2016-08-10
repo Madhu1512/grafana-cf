@@ -8,6 +8,8 @@ BUILD_DIR=${1}
 CACHE_DIR=${2}
 BUILDPACK=$(cd $(dirname ${0})/..; pwd)
 GRAFANA_TARGET=${BUILD_DIR}/grafana
+CONF_TARGET=${GRAFANA_TARGET}/config
+CONF_SRC=${BUILDPACK}/config
 source ${BUILDPACK}/bin/common.sh
 
 GRAFANA_VERSION=3.1.1-1470047149
@@ -34,13 +36,17 @@ else
     https://grafanarel.s3.amazonaws.com/builds/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz
 fi
 
+mkdir -p ${CONF_TARGET}
 
 status "Extracting..."
 tar xfz ${CACHE_DIR}/${GRAFANA_ARCHIVE} --strip-components 1 -C ${GRAFANA_TARGET}
 
-status ${CACHE_DIR}/${GRAFANA_ARCHIVE}
-status ${BUILDPACK}
-status ${GRAFANA_TARGET}
+for SRC in ${CONF_SRC}/*; do
+  TARGET="${CONF_TARGET}/$(basename ${SRC})"
+  [[ -r ${TARGET} ]] && cp -n ${SRC} ${TARGET}.overriden-grafana-cf-default
+  [[ -r ${TARGET} ]] || cp    ${SRC} ${TARGET}
+done
+
 cp -f ${BUILDPACK}/bin/run.sh ${GRAFANA_TARGET}/
 status "=-=-=-=-=-> Done."
 

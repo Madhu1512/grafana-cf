@@ -4,4 +4,4 @@ set -euo pipefail
 
 export APP_ROOT=$HOME
 
-exec ${APP_ROOT}/grafana/bin/grafana-server
+exec ${APP_ROOT}/grafana/bin/grafana-server --config=${APP_ROOT}/heka/config/grafana.ini
