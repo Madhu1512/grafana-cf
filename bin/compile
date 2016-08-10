@@ -40,6 +40,8 @@ if [ ! -d "${GRAFANA_TARGET}" ]; then
 else
   status "Using existing Directory: ${GRAFANA_TARGET}"
 fi
+status ${BUILDPACK}
+status ${GRAFANA_TARGET}
 cp -f ${BUILDPACK}/bin/run.sh ${GRAFANA_TARGET}/
 status "=-=-=-=-=-> Done."
 
