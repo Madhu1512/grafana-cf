@@ -1,0 +1,38 @@
+#!/bin/sh
+# bin/compile <build-dir> <cache-dir>
+
+BUILD_DIR=${1}
+CACHE_DIR=${2}
+BUILDPACK=$(cd $(dirname ${0})/..; pwd)
+source ${BUILDPACK}/bin/common.sh
+
+GRAFANA_TARGET=${BUILD_DIR}/grafana
+GRAFANA_VERSION=3.1.1-1470047149
+GRAFANA_ARCHIVE=grafana-${GRAFANA_VERSION}.tar.gz
+
+export BUILDPACK_PATH=${BUILDPACK}
+
+if [ ! -d ${CACHE_DIR} ]; then
+  status "Creating ${CACHE_DIR}"
+  mkdir ${CACHE_DIR}
+fi
+
+if [ -f "${CACHE_DIR}/${GRAFANA_ARCHIVE}" ]; then
+  status "Using file from cache: ${GRAFANA_ARCHIVE}"
+else
+  status "Downloading Grafana Version: ${GRAFANA_ARCHIVE}"
+  curl --location -s \
+    -o "${CACHE_DIR}/${GRAFANA_ARCHIVE}" \
+    https://grafanarel.s3.amazonaws.com/builds/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz
+fi
+
+if [ ! -d "${GRAFANA_TARGET}" ]; then
+  status "Extracting..."
+  tar xfz ${CACHE_DIR}/${GRAFANA_ARCHIVE} --strip-components 1 -C ${GRAFANA_TARGET}
+else
+  status "Using existing Directory: ${GRAFANA_TARGET}"
+fi
+
+status "=-=-=-=-=-> Done."
+
+exit 0
