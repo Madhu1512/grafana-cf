@@ -3,6 +3,7 @@
 set -euo pipefail
 
 export APP_ROOT=$HOME
-echo echo $(ls -l ${APP_ROOT})
+echo $(ls -l ${APP_ROOT}/config)
+echo $(ls -l ${APP_ROOT}/grafana)
 echo ${APP_ROOT}/grafana/bin/grafana-server --config=${APP_ROOT}/grafana/config/grafana.ini
 exec ${APP_ROOT}/grafana/bin/grafana-server --config=${APP_ROOT}/grafana/config/grafana.ini
